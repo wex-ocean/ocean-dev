@@ -9,8 +9,7 @@ import {
   Server,
   GitBranch,
   ShoppingCart,
-  Zap,
-  Layout,
+  Figma,
 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,38 +17,38 @@ gsap.registerPlugin(ScrollTrigger);
 const skills = [
   {
     icon: Code2,
-    title: 'WordPress Development',
-    description: 'Theme & Plugin Customization, Elementor / Gutenberg',
+    title: 'WordPress Theme & Plugin',
+    description: 'Customization, Elementor / Gutenberg',
     color: 'from-blue-500 to-cyan-500',
   },
   {
     icon: Database,
     title: 'Backend Technologies',
-    description: 'PHP, MySQL, JavaScript, jQuery',
+    description: 'PHP, MySQL, Tailwind CSS, jQuery, JavaScript',
     color: 'from-purple-500 to-pink-500',
   },
   {
     icon: Palette,
-    title: 'Frontend Design',
-    description: 'Tailwind CSS, HTML, CSS, Responsive UI/UX',
+    title: 'Frontend Technologies',
+    description: 'HTML, CSS, Responsive UI/UX Design',
     color: 'from-orange-500 to-red-500',
   },
   {
     icon: ShoppingCart,
-    title: 'E-Commerce',
-    description: 'WooCommerce Setup & Customization',
+    title: 'WooCommerce',
+    description: 'Setup & Customization',
     color: 'from-green-500 to-emerald-500',
   },
   {
     icon: Search,
-    title: 'SEO & Performance',
+    title: 'SEO Optimization',
     description: 'Speed Optimization, Debugging & Problem-Solving',
     color: 'from-yellow-500 to-orange-500',
   },
   {
     icon: Server,
-    title: 'Hosting & Deployment',
-    description: 'cPanel, Hosting, DNS, SSL Configuration',
+    title: 'Hosting & Server',
+    description: 'cPanel / Hosting / DNS / SSL',
     color: 'from-indigo-500 to-purple-500',
   },
   {
@@ -59,16 +58,10 @@ const skills = [
     color: 'from-pink-500 to-rose-500',
   },
   {
-    icon: Layout,
+    icon: Figma,
     title: 'Design Tools',
-    description: 'Figma, Responsive Design Principles',
+    description: 'Figma, Responsive UI/UX Design',
     color: 'from-teal-500 to-cyan-500',
-  },
-  {
-    icon: Zap,
-    title: 'Full Stack',
-    description: 'Complete project delivery from start to finish',
-    color: 'from-violet-500 to-purple-500',
   },
 ];
 
@@ -122,28 +115,39 @@ export default function Skills() {
                 ref={(el) => {
                   cardsRef.current[index] = el;
                 }}
-                className="group glass-strong p-6 xl:p-8 rounded-2xl hover:scale-105 transition-all duration-300 cursor-pointer border border-border hover:border-primary/50"
+                className="group relative glass-strong p-6 xl:p-8 rounded-2xl transition-all duration-500 cursor-pointer border border-border hover:border-primary/50 hover:scale-[1.05] hover:shadow-2xl hover:shadow-primary/20"
+                style={{
+                  transformStyle: 'preserve-3d',
+                }}
               >
+                {/* Animated Background Glow */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 blur-2xl rounded-2xl transition-opacity duration-500`}
+                />
+
                 {/* Icon */}
-                <div className="relative mb-6">
+                <div className="relative mb-6 z-10">
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-20 blur-xl rounded-full`}
+                    className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-20 group-hover:opacity-40 blur-xl rounded-full transition-opacity duration-500`}
                   />
-                  <div className="relative glass p-4 rounded-2xl w-fit">
-                    <Icon className="w-8 h-8 text-primary group-hover:text-primary-glow transition-colors" />
+                  <div className="relative glass p-4 rounded-2xl w-fit group-hover:shadow-lg group-hover:shadow-primary/30 transition-shadow duration-500">
+                    <Icon className="w-8 h-8 text-primary group-hover:text-primary-glow group-hover:scale-110 transition-all duration-500" />
                   </div>
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                <h3 className="relative z-10 text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
                   {skill.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="relative z-10 text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   {skill.description}
                 </p>
 
-                {/* Hover Effect */}
-                <div className="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-primary to-primary-glow rounded-full transition-all duration-500" />
+                {/* Animated Bottom Border */}
+                <div className="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-primary via-primary-glow to-primary rounded-full transition-all duration-700 ease-out" />
+                
+                {/* Corner Accent */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             );
           })}
