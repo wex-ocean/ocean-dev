@@ -26,7 +26,7 @@ export default function Portfolio() {
       <CustomCursor />
       <Header />
 
-      <main className="relative">
+      <main className="relative z-10">
         <Hero />
         <About />
         <Skills />

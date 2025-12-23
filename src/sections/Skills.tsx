@@ -98,7 +98,7 @@ export default function Skills() {
     <section
       id="skills"
       ref={sectionRef}
-      className="relative py-20 xl:py-32 overflow-hidden"
+      className="relative py-20 xl:py-32 overflow-hidden bg-muted/20"
     >
       <div className="container mx-auto px-6">
         {/* Section Header */}

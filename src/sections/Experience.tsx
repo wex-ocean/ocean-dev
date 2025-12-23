@@ -81,7 +81,7 @@ export default function Experience() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative py-20 xl:py-32 overflow-hidden"
+      className="relative py-20 xl:py-32 overflow-hidden bg-background"
     >
       <div className="container mx-auto px-6">
         {/* Section Header */}
