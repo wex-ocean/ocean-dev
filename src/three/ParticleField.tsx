@@ -1,13 +1,13 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Points } from '@react-three/drei';
 
 export default function ParticleField() {
-  const pointsRef = useRef<any>(null);
+  const pointsRef = useRef<THREE.Points>(null);
   const particleCount = 500;
 
-  const [positions, colors] = useMemo(() => {
+  const geometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
@@ -38,7 +38,10 @@ export default function ParticleField() {
       }
     }
 
-    return [positions, colors];
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    return geo;
   }, []);
 
   const material = useMemo(() => {
@@ -52,6 +55,13 @@ export default function ParticleField() {
     });
   }, []);
 
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+      material.dispose();
+    };
+  }, [geometry, material]);
+
   useFrame((state) => {
     if (!pointsRef.current) return;
 
@@ -63,12 +73,7 @@ export default function ParticleField() {
   });
 
   return (
-    <Points
-      ref={pointsRef}
-      positions={positions}
-      colors={colors}
-      stride={3}
-      material={material}
-    />
+    // @ts-ignore - React Three Fiber intrinsic element
+    <points ref={pointsRef} geometry={geometry} material={material} />
   );
 }

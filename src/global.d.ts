@@ -7,5 +7,7 @@ declare namespace JSX {
     bufferAttribute: any;
     pointsMaterial: any;
     primitive: any;
+    group: any;
+    mesh: any;
   }
 }

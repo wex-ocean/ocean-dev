@@ -5,6 +5,7 @@ declare global {
     interface IntrinsicElements {
       primitive: any;
       pointsMaterial: any;
+      points: any;
     }
   }
 }
