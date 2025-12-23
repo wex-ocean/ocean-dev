@@ -1,218 +1,229 @@
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
+import { useEffect, useRef } from 'react';
 
-interface CursorTrail {
+interface GridPoint {
+  baseX: number;
+  baseY: number;
+  currentX: number;
+  currentY: number;
+  vx: number;
+  vy: number;
+}
+
+interface Particle {
   x: number;
   y: number;
-  scale: number;
+  size: number;
+  speedX: number;
+  speedY: number;
+  life: number;
+  decay: number;
 }
 
 export default function CustomCursor() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const cursorDotRef = useRef<HTMLDivElement>(null);
-  const trailRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [isHovering, setIsHovering] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const mousePos = useRef({ x: 0, y: 0 });
-  const trailPositions = useRef<CursorTrail[]>([]);
-  const animationFrameId = useRef<number | undefined>(undefined);
+  const mouseRef = useRef({ x: -1000, y: -1000, lastX: -1000, lastY: -1000, active: false });
+  const gridRef = useRef<GridPoint[]>([]);
+  const particlesRef = useRef<Particle[]>([]);
+  const animationFrameRef = useRef<number | undefined>(undefined);
 
-  const TRAIL_COUNT = 12; // Number of trailing circles for wavy effect
+  const cellSize = 35;
+  const effectRadius = 180;
 
   useEffect(() => {
-    // Check if touch device
-    const checkTouch = () => {
-      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    };
-    checkTouch();
-
-    if (isTouchDevice) return;
-
-    // Initialize trail positions
-    trailPositions.current = Array.from({ length: TRAIL_COUNT }, (_, i) => ({
-      x: 0,
-      y: 0,
-      scale: 1,
-    }));
-
+    const canvas = canvasRef.current;
     const cursorDot = cursorDotRef.current;
-    if (!cursorDot) return;
+    if (!canvas || !cursorDot) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width: number, height: number, rows: number, cols: number;
+
+    // Initialize grid
+    const initGrid = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      cols = Math.ceil(width / cellSize) + 1;
+      rows = Math.ceil(height / cellSize) + 1;
+      gridRef.current = [];
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          gridRef.current.push({
+            baseX: x * cellSize,
+            baseY: y * cellSize,
+            currentX: x * cellSize,
+            currentY: y * cellSize,
+            vx: 0,
+            vy: 0,
+          });
+        }
+      }
+    };
+
+    // Create particle
+    const createParticle = (x: number, y: number): Particle => ({
+      x,
+      y,
+      size: Math.random() * 3 + 1,
+      speedX: (Math.random() - 0.5) * 4,
+      speedY: (Math.random() - 0.5) * 4,
+      life: 1,
+      decay: Math.random() * 0.02 + 0.01,
+    });
 
     // Mouse move handler
     const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
+      const mouse = mouseRef.current;
+      mouse.lastX = mouse.x;
+      mouse.lastY = mouse.y;
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.active = true;
 
-      // Animate main cursor dot instantly
-      gsap.to(cursorDot, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1,
-        ease: 'power2.out',
-      });
+      // Update cursor dot position
+      cursorDot.style.left = e.clientX + 'px';
+      cursorDot.style.top = e.clientY + 'px';
+
+      // Create particles on movement
+      if (Math.abs(mouse.x - mouse.lastX) > 2) {
+        for (let i = 0; i < 3; i++) {
+          particlesRef.current.push(createParticle(mouse.x, mouse.y));
+        }
+      }
     };
 
-    // Animate trail with wavy effect
-    const animateTrail = () => {
-      const { x, y } = mousePos.current;
+    // Animation loop
+    const animate = () => {
+      const mouse = mouseRef.current;
+      const grid = gridRef.current;
+      const particles = particlesRef.current;
 
-      trailPositions.current.forEach((trail, index) => {
-        const trailElement = trailRefs.current[index];
-        if (!trailElement) return;
+      // Slight trail effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+      ctx.fillRect(0, 0, width, height);
 
-        // Create wavy effect with delay and spring-like motion
-        const delay = (index + 1) * 0.03;
-        const targetX = x;
-        const targetY = y;
+      // Update & Draw Particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.life -= p.decay;
 
-        // Smooth interpolation for wavy effect
-        trail.x += (targetX - trail.x) * (0.15 - index * 0.008);
-        trail.y += (targetY - trail.y) * (0.15 - index * 0.008);
+        // Draw particle
+        ctx.fillStyle = `rgba(168, 85, 247, ${p.life})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
 
-        // Add wave oscillation
-        const wave = Math.sin(Date.now() * 0.003 + index * 0.5) * (index * 0.8);
-        
-        // Scale decreases with distance from cursor
-        const scale = isHovering ? 1.2 - index * 0.08 : 1 - index * 0.06;
-        trail.scale = scale;
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
 
-        // Apply transform with wave effect
-        gsap.set(trailElement, {
-          x: trail.x + wave,
-          y: trail.y + wave * 0.5,
-          scale: trail.scale,
-          opacity: 1 - index * 0.07,
-        });
+      // Update grid physics
+      grid.forEach((p) => {
+        const dx = mouse.x - p.currentX;
+        const dy = mouse.y - p.currentY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < effectRadius) {
+          const force = (effectRadius - dist) / effectRadius;
+          const angle = Math.atan2(dy, dx);
+          p.vx -= Math.cos(angle) * force * 12;
+          p.vy -= Math.sin(angle) * force * 12;
+        }
+
+        p.vx += (p.baseX - p.currentX) * 0.06;
+        p.vy += (p.baseY - p.currentY) * 0.06;
+        p.vx *= 0.82;
+        p.vy *= 0.82;
+        p.currentX += p.vx;
+        p.currentY += p.vy;
       });
 
-      animationFrameId.current = requestAnimationFrame(animateTrail);
+      // Draw fluid grid
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(168, 85, 247, 0.12)';
+      ctx.lineWidth = 1;
+
+      // Draw horizontal lines
+      for (let y = 0; y < rows; y++) {
+        ctx.moveTo(grid[y * cols].currentX, grid[y * cols].currentY);
+        for (let x = 1; x < cols; x++) {
+          ctx.lineTo(grid[y * cols + x].currentX, grid[y * cols + x].currentY);
+        }
+      }
+
+      // Draw vertical lines
+      for (let x = 0; x < cols; x++) {
+        ctx.moveTo(grid[x].currentX, grid[x].currentY);
+        for (let y = 1; y < rows; y++) {
+          ctx.lineTo(grid[y * cols + x].currentX, grid[y * cols + x].currentY);
+        }
+      }
+      ctx.stroke();
+
+      // Tighter glow around cursor
+      if (mouse.active) {
+        const grad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 200);
+        grad.addColorStop(0, 'rgba(168, 85, 247, 0.3)');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      animationFrameRef.current = requestAnimationFrame(animate);
     };
 
-    // Magnetic effect for interactive elements
-    const handleMouseEnter = (e: Event) => {
-      setIsHovering(true);
-      const target = e.currentTarget as HTMLElement;
-      
-      // Get element position and size
-      const rect = target.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-
-      // Animate cursor to element center with magnetic pull
-      gsap.to(mousePos.current, {
-        x: centerX,
-        y: centerY,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
-
-      // Scale up the element slightly
-      gsap.to(target, {
-        scale: 1.05,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
+    // Resize handler
+    const handleResize = () => {
+      initGrid();
     };
 
-    const handleMouseLeave = (e: Event) => {
-      setIsHovering(false);
-      const target = e.currentTarget as HTMLElement;
-
-      // Reset element scale
-      gsap.to(target, {
-        scale: 1,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
-    };
-
-    // Add event listeners
+    // Initialize
+    initGrid();
     window.addEventListener('mousemove', handleMouseMove);
-    animateTrail();
-
-    // Add magnetic effect to interactive elements
-    const interactiveElements = document.querySelectorAll(
-      'a, button, [role="button"], input, textarea, select, .magnetic'
-    );
-
-    interactiveElements.forEach((el) => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
-    });
+    window.addEventListener('resize', handleResize);
+    animate();
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
+      window.removeEventListener('resize', handleResize);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
       }
-      interactiveElements.forEach((el) => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
-      });
     };
-  }, [isTouchDevice, isHovering]);
-
-  // Don't render on touch devices
-  if (isTouchDevice) return null;
+  }, []);
 
   return (
     <>
-      {/* Main cursor dot - bright purple */}
+      {/* Canvas for fluid grid and particles */}
+      <canvas
+        ref={canvasRef}
+        className="fixed top-0 left-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 1 }}
+      />
+
+      {/* Central cursor dot with glow */}
       <div
         ref={cursorDotRef}
-        className="custom-cursor-dot fixed top-0 left-0 pointer-events-none z-[9999]"
+        className="cursor-center fixed pointer-events-none"
         style={{
-          width: '12px',
-          height: '12px',
+          width: '20px',
+          height: '20px',
+          background: '#fff',
+          boxShadow: `
+            0 0 15px 5px rgba(255, 255, 255, 0.8),
+            0 0 30px 15px rgba(168, 85, 247, 0.6)
+          `,
+          borderRadius: '50%',
+          zIndex: 100,
           transform: 'translate(-50%, -50%)',
-          mixBlendMode: 'screen',
+          transition: 'transform 0.05s linear',
         }}
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{
-            background: 'radial-gradient(circle, #a855f7 0%, #9333ea 50%, #7e22ce 100%)',
-            boxShadow: `
-              0 0 20px rgba(168, 85, 247, 0.8),
-              0 0 40px rgba(168, 85, 247, 0.6),
-              0 0 60px rgba(168, 85, 247, 0.4)
-            `,
-            transform: isHovering ? 'scale(1.5)' : 'scale(1)',
-            transition: 'transform 0.3s ease',
-          }}
-        />
-      </div>
-
-      {/* Wavy trail effect */}
-      {Array.from({ length: TRAIL_COUNT }).map((_, index) => (
-        <div
-          key={index}
-          ref={(el) => {
-            trailRefs.current[index] = el;
-          }}
-          className="custom-cursor-trail fixed top-0 left-0 pointer-events-none z-[9998]"
-          style={{
-            width: `${28 - index * 1.5}px`,
-            height: `${28 - index * 1.5}px`,
-            transform: 'translate(-50%, -50%)',
-            mixBlendMode: 'screen',
-          }}
-        >
-          <div
-            className="w-full h-full rounded-full"
-            style={{
-              background: `radial-gradient(circle, 
-                rgba(168, 85, 247, ${0.6 - index * 0.04}) 0%, 
-                rgba(147, 51, 234, ${0.4 - index * 0.03}) 50%, 
-                rgba(126, 34, 206, ${0.2 - index * 0.02}) 100%
-              )`,
-              boxShadow: `
-                0 0 ${20 - index}px rgba(168, 85, 247, ${0.5 - index * 0.03}),
-                0 0 ${40 - index * 2}px rgba(168, 85, 247, ${0.3 - index * 0.02})
-              `,
-              filter: `blur(${index * 0.3}px)`,
-            }}
-          />
-        </div>
-      ))}
+      />
     </>
   );
 }
