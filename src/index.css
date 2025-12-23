@@ -67,6 +67,12 @@
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+    cursor: none; /* Hide default cursor for custom cursor */
+  }
+
+  /* Hide default cursor on all interactive elements */
+  a, button, input, textarea, select, [role="button"], .magnetic {
+    cursor: none !important;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -145,11 +151,21 @@
 }
 
 /* Custom cursor styles */
-.custom-cursor {
+.custom-cursor-dot,
+.custom-cursor-trail {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: difference;
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+.custom-cursor-dot {
+  z-index: 9999;
+}
+
+.custom-cursor-trail {
+  z-index: 9998;
 }
 
 /* Reduced motion support */
@@ -160,5 +176,15 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  
+  /* Hide custom cursor on reduced motion */
+  .custom-cursor-dot,
+  .custom-cursor-trail {
+    display: none !important;
+  }
+  
+  body {
+    cursor: auto !important;
   }
 }
