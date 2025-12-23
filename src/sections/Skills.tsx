@@ -3,14 +3,14 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Code2,
-  Palette,
   Database,
-  Smartphone,
-  Zap,
-  Globe,
-  Layout,
+  Palette,
+  Search,
+  Server,
   GitBranch,
-  Rocket,
+  ShoppingCart,
+  Zap,
+  Layout,
 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,76 +19,74 @@ const skills = [
   {
     icon: Code2,
     title: 'WordPress Development',
-    description: 'Custom themes, plugins, and WooCommerce solutions',
-  },
-  {
-    icon: Layout,
-    title: 'React & Frontend',
-    description: 'Modern React applications with TypeScript',
-  },
-  {
-    icon: Palette,
-    title: 'UI/UX Design',
-    description: 'Creating beautiful, intuitive user interfaces',
+    description: 'Theme & Plugin Customization, Elementor / Gutenberg',
+    color: 'from-blue-500 to-cyan-500',
   },
   {
     icon: Database,
-    title: 'Backend Development',
-    description: 'RESTful APIs and database management',
+    title: 'Backend Technologies',
+    description: 'PHP, MySQL, JavaScript, jQuery',
+    color: 'from-purple-500 to-pink-500',
   },
   {
-    icon: Smartphone,
-    title: 'Responsive Design',
-    description: 'Mobile-first, cross-device compatibility',
+    icon: Palette,
+    title: 'Frontend Design',
+    description: 'Tailwind CSS, HTML, CSS, Responsive UI/UX',
+    color: 'from-orange-500 to-red-500',
   },
   {
-    icon: Zap,
-    title: 'Performance Optimization',
-    description: 'Fast loading times and smooth animations',
+    icon: ShoppingCart,
+    title: 'E-Commerce',
+    description: 'WooCommerce Setup & Customization',
+    color: 'from-green-500 to-emerald-500',
   },
   {
-    icon: Globe,
-    title: 'SEO & Accessibility',
-    description: 'Search engine optimization and WCAG compliance',
+    icon: Search,
+    title: 'SEO & Performance',
+    description: 'Speed Optimization, Debugging & Problem-Solving',
+    color: 'from-yellow-500 to-orange-500',
+  },
+  {
+    icon: Server,
+    title: 'Hosting & Deployment',
+    description: 'cPanel, Hosting, DNS, SSL Configuration',
+    color: 'from-indigo-500 to-purple-500',
   },
   {
     icon: GitBranch,
     title: 'Version Control',
-    description: 'Git workflows and collaborative development',
+    description: 'Git, GitHub, Vercel',
+    color: 'from-pink-500 to-rose-500',
   },
   {
-    icon: Rocket,
-    title: 'Deployment & DevOps',
-    description: 'CI/CD pipelines and cloud hosting',
+    icon: Layout,
+    title: 'Design Tools',
+    description: 'Figma, Responsive Design Principles',
+    color: 'from-teal-500 to-cyan-500',
+  },
+  {
+    icon: Zap,
+    title: 'Full Stack',
+    description: 'Complete project delivery from start to finish',
+    color: 'from-violet-500 to-purple-500',
   },
 ];
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(titleRef.current, {
+      gsap.from(cardsRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 80%',
-        },
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-      });
-
-      gsap.from('.skill-card', {
-        scrollTrigger: {
-          trigger: cardsRef.current,
-          start: 'top 80%',
+          start: 'top 70%',
         },
         y: 100,
         opacity: 0,
-        stagger: 0.1,
         duration: 0.8,
+        stagger: 0.1,
         ease: 'power3.out',
       });
     }, sectionRef);
@@ -100,31 +98,52 @@ export default function Skills() {
     <section
       id="skills"
       ref={sectionRef}
-      className="min-h-screen flex items-center py-20 relative"
+      className="relative py-20 xl:py-32 overflow-hidden"
     >
       <div className="container mx-auto px-6">
-        <h2
-          ref={titleRef}
-          className="text-4xl xl:text-5xl font-bold text-center mb-16"
-        >
-          My <span className="gradient-text">Skills</span>
-        </h2>
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl xl:text-5xl font-bold mb-4">
+            My <span className="gradient-text">Skills</span>
+          </h2>
+          <div className="h-1 w-20 bg-gradient-to-r from-primary to-primary-glow rounded-full mx-auto mb-6" />
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Comprehensive expertise in modern web development technologies and tools
+          </p>
+        </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {/* Skills Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
           {skills.map((skill, index) => {
             const Icon = skill.icon;
             return (
               <div
                 key={index}
-                className="skill-card glass rounded-2xl p-8 hover:glass-strong hover:scale-105 transition-all duration-300 group cursor-pointer"
+                ref={(el) => {
+                  cardsRef.current[index] = el;
+                }}
+                className="group glass-strong p-6 xl:p-8 rounded-2xl hover:scale-105 transition-all duration-300 cursor-pointer border border-border hover:border-primary/50"
               >
-                <div className="flex flex-col items-center text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                    <Icon className="w-8 h-8 text-primary-glow" />
+                {/* Icon */}
+                <div className="relative mb-6">
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-20 blur-xl rounded-full`}
+                  />
+                  <div className="relative glass p-4 rounded-2xl w-fit">
+                    <Icon className="w-8 h-8 text-primary group-hover:text-primary-glow transition-colors" />
                   </div>
-                  <h3 className="text-xl font-bold">{skill.title}</h3>
-                  <p className="text-muted-foreground">{skill.description}</p>
                 </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                  {skill.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {skill.description}
+                </p>
+
+                {/* Hover Effect */}
+                <div className="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-primary to-primary-glow rounded-full transition-all duration-500" />
               </div>
             );
           })}

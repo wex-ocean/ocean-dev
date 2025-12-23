@@ -2,119 +2,190 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Header() {
   const headerRef = useRef<HTMLElement>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const header = headerRef.current;
     if (!header) return;
 
-    // GSAP ScrollTrigger for header transformation
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.body,
-        start: 'top top',
-        end: '100px top',
-        scrub: true,
-      },
-    });
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 50;
+      setIsScrolled(scrolled);
 
-    tl.to(header, {
-      height: '80px',
-      width: '90%',
-      top: '12px',
-      borderRadius: '16px',
-      backdropFilter: 'blur(16px)',
-      background: 'rgba(255, 255, 255, 0.08)',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-      ease: 'power2.out',
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (scrolled) {
+        gsap.to(header, {
+          height: '70px',
+          width: '92%',
+          borderRadius: '50px',
+          marginTop: '12px',
+          backdropFilter: 'blur(20px)',
+          background: 'rgba(5, 49, 131, 0.15)',
+          border: '1px solid rgba(168, 85, 247, 0.2)',
+          boxShadow: '0 8px 32px rgba(168, 85, 247, 0.15)',
+          duration: 0.4,
+          ease: 'power2.out',
+        });
+      } else {
+        gsap.to(header, {
+          height: '85px',
+          width: '100%',
+          borderRadius: '0px',
+          marginTop: '0px',
+          backdropFilter: 'blur(12px)',
+          background: 'rgba(0, 0, 0, 0.6)',
+          border: '1px solid rgba(168, 85, 247, 0.1)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+          duration: 0.4,
+          ease: 'power2.out',
+        });
+      }
     };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      setMobileMenuOpen(false);
+      setIsMobileMenuOpen(false);
     }
   };
 
-  const navItems = [
-    { label: 'Home', id: 'hero' },
-    { label: 'About', id: 'about' },
-    { label: 'Skills', id: 'skills' },
-    { label: 'Experience', id: 'experience' },
-    { label: 'Projects', id: 'projects' },
-    { label: 'Contact', id: 'contact' },
-  ];
-
   return (
-    <header
-      ref={headerRef}
-      className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-24 z-50 transition-all duration-300"
-      style={{ willChange: 'transform, height, width' }}
-    >
-      <nav className="h-full flex items-center justify-between px-6 xl:px-12">
+    <>
+      <header
+        ref={headerRef}
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-[85px] z-50 flex items-center justify-between px-6 xl:px-12 transition-all"
+        style={{
+          backdropFilter: 'blur(12px)',
+          background: 'rgba(0, 0, 0, 0.6)',
+          border: '1px solid rgba(168, 85, 247, 0.1)',
+        }}
+      >
         {/* Logo */}
-        <button
-          type="button"
-          onClick={() => scrollToSection('hero')}
-          className="text-2xl font-bold gradient-text cursor-pointer"
-        >
-          GB
-        </button>
-
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-8">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => scrollToSection(item.id)}
-              className="text-foreground hover:text-primary-glow transition-colors duration-300 font-medium cursor-pointer"
-            >
-              {item.label}
-            </button>
-          ))}
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
+          <img src="/images/logo.jpg" alt="Ocean Logo" className="h-10 xl:h-12 w-auto object-contain" />
         </div>
 
-        {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="lg:hidden"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
+          <button
+            onClick={() => scrollToSection('hero')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Home
+          </button>
+          <button
+            onClick={() => scrollToSection('about')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            About
+          </button>
+          <button
+            onClick={() => scrollToSection('skills')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Skills
+          </button>
+          <button
+            onClick={() => scrollToSection('experience')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Experience
+          </button>
+          <button
+            onClick={() => scrollToSection('projects')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Projects
+          </button>
+          <button
+            onClick={() => scrollToSection('contact')}
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Contact
+          </button>
+        </nav>
+
+        {/* Hire Me Button */}
+        <button
+          onClick={() => scrollToSection('contact')}
+          className="hidden lg:block px-6 xl:px-8 py-2.5 xl:py-3 bg-gradient-to-r from-primary to-primary-glow text-white rounded-full hover:shadow-lg hover:shadow-primary/50 transition-all font-semibold"
         >
-          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </Button>
-      </nav>
+          Hire Me
+        </button>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </header>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full glass-strong mt-2 rounded-2xl p-6 animate-fade-in">
-          <div className="flex flex-col gap-4">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => scrollToSection(item.id)}
-                className="text-foreground hover:text-primary-glow transition-colors duration-300 font-medium text-left py-2 cursor-pointer"
-              >
-                {item.label}
-              </button>
-            ))}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 lg:hidden">
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div className="absolute top-[85px] left-0 right-0 glass-strong border-t border-border p-6 space-y-4">
+            <button
+              onClick={() => scrollToSection('hero')}
+              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-3 px-4 rounded-lg hover:bg-white/5"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => scrollToSection('about')}
+              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-3 px-4 rounded-lg hover:bg-white/5"
+            >
+              About
+            </button>
+            <button
+              onClick={() => scrollToSection('skills')}
+              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-3 px-4 rounded-lg hover:bg-white/5"
+            >
+              Skills
+            </button>
+            <button
+              onClick={() => scrollToSection('experience')}
+              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-3 px-4 rounded-lg hover:bg-white/5"
+            >
+              Experience
+            </button>
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-3 px-4 rounded-lg hover:bg-white/5"
+            >
+              Projects
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-3 px-4 rounded-lg hover:bg-white/5"
+            >
+              Contact
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="w-full px-6 py-3 bg-gradient-to-r from-primary to-primary-glow text-white rounded-full hover:shadow-lg hover:shadow-primary/50 transition-all font-semibold mt-4"
+            >
+              Hire Me
+            </button>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
