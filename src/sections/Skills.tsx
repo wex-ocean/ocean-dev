@@ -18,7 +18,7 @@ const skills = [
   {
     icon: Code2,
     title: 'WordPress Theme & Plugin',
-    description: 'Customization, Elementor / Gutenberg',
+    description: 'Elementor/Gutenberg',
     color: 'from-blue-500 to-cyan-500',
   },
   {
@@ -30,7 +30,7 @@ const skills = [
   {
     icon: Palette,
     title: 'Frontend Technologies',
-    description: 'HTML, CSS, Responsive UI/UX Design',
+    description: 'HTML, CSS, Responsive UI/UX',
     color: 'from-orange-500 to-red-500',
   },
   {
@@ -42,13 +42,13 @@ const skills = [
   {
     icon: Search,
     title: 'SEO Optimization',
-    description: 'Speed Optimization, Debugging & Problem-Solving',
+    description: 'Speed, Debugging, Problem-Solving',
     color: 'from-yellow-500 to-orange-500',
   },
   {
     icon: Server,
     title: 'Hosting & Server',
-    description: 'cPanel / Hosting / DNS / SSL',
+    description: 'cPanel, DNS, SSL',
     color: 'from-indigo-500 to-purple-500',
   },
   {
@@ -60,7 +60,7 @@ const skills = [
   {
     icon: Figma,
     title: 'Design Tools',
-    description: 'Figma, Responsive UI/UX Design',
+    description: 'Figma, Responsive UI/UX',
     color: 'from-teal-500 to-cyan-500',
   },
 ];
