@@ -1,6 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import {
   Code2,
   Database,
@@ -11,8 +9,6 @@ import {
   ShoppingCart,
   Figma,
 } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const skills = [
   {
@@ -67,30 +63,6 @@ const skills = [
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    // Only run animation if GSAP and elements are available
-    if (!sectionRef.current || cardsRef.current.length === 0) return;
-
-    const ctx = gsap.context(() => {
-      // Animate cards on scroll
-      gsap.from(cardsRef.current.filter(Boolean), {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.08,
-        ease: 'power2.out',
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section
@@ -117,10 +89,7 @@ export default function Skills() {
             return (
               <div
                 key={index}
-                ref={(el) => {
-                  cardsRef.current[index] = el;
-                }}
-                className="group relative glass-strong p-6 xl:p-8 rounded-2xl transition-all duration-500 cursor-pointer border border-border hover:border-primary/50 hover:scale-[1.05] hover:shadow-2xl hover:shadow-primary/20 opacity-100"
+                className="group relative glass-strong p-6 xl:p-8 rounded-2xl transition-all duration-500 cursor-pointer border border-border hover:border-primary/50 hover:scale-[1.05] hover:shadow-2xl hover:shadow-primary/20"
                 style={{
                   transformStyle: 'preserve-3d',
                 }}
