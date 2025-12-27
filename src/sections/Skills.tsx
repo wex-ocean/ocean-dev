@@ -70,17 +70,22 @@ export default function Skills() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    // Only run animation if GSAP and elements are available
+    if (!sectionRef.current || cardsRef.current.length === 0) return;
+
     const ctx = gsap.context(() => {
-      gsap.from(cardsRef.current, {
+      // Animate cards on scroll
+      gsap.from(cardsRef.current.filter(Boolean), {
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 70%',
+          start: 'top 80%',
+          toggleActions: 'play none none none',
         },
-        y: 100,
+        y: 30,
         opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out',
+        duration: 0.5,
+        stagger: 0.08,
+        ease: 'power2.out',
       });
     }, sectionRef);
 
@@ -115,7 +120,7 @@ export default function Skills() {
                 ref={(el) => {
                   cardsRef.current[index] = el;
                 }}
-                className="group relative glass-strong p-6 xl:p-8 rounded-2xl transition-all duration-500 cursor-pointer border border-border hover:border-primary/50 hover:scale-[1.05] hover:shadow-2xl hover:shadow-primary/20"
+                className="group relative glass-strong p-6 xl:p-8 rounded-2xl transition-all duration-500 cursor-pointer border border-border hover:border-primary/50 hover:scale-[1.05] hover:shadow-2xl hover:shadow-primary/20 opacity-100"
                 style={{
                   transformStyle: 'preserve-3d',
                 }}
