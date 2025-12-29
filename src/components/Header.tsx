@@ -73,7 +73,7 @@ export default function Header() {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
-          <img src="/images/logo.png" alt="Ocean Logo" className="h-10 xl:h-12 w-auto object-contain" />
+          <img src="/images/logo.png" alt="Ocean Logo" className="h-14 xl:h-16 w-auto object-contain" />
         </div>
 
         {/* Desktop Navigation */}
