@@ -119,7 +119,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="min-h-screen flex items-center py-20 relative"
+      className="relative py-20 xl:py-32 overflow-hidden bg-background"
     >
       <div className="container mx-auto px-6">
         <h2

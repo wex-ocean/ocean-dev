@@ -55,7 +55,7 @@ export default function About() {
               {/* Image Container */}
               <div className="relative glass-strong p-2 rounded-3xl">
                 <img
-                  src="/images/profile.jpg"
+                  src="/images/resume-img.jpg"
                   alt="Ganesh Bahadur Thapa"
                   className="w-full h-auto rounded-2xl object-cover"
                 />
