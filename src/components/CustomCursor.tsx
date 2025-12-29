@@ -227,9 +227,9 @@ export default function CustomCursor() {
         <div
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(circle, #fff 0%, rgba(168, 85, 247, 0.9) 100%)',
+            background: '#fff',
             boxShadow: `
-              0 0 20px 8px rgba(255, 255, 255, 0.9),
+              0 0 20px 8px rgba(255, 255, 255, 1),
               0 0 40px 20px rgba(168, 85, 247, 0.7),
               0 0 60px 30px rgba(168, 85, 247, 0.4)
             `,
