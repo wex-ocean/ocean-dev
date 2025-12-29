@@ -86,9 +86,9 @@ export default function CustomCursor() {
       cursorDot.style.left = e.clientX + 'px';
       cursorDot.style.top = e.clientY + 'px';
 
-      // Create particles on movement
-      if (Math.abs(mouse.x - mouse.lastX) > 2) {
-        for (let i = 0; i < 3; i++) {
+      // Create more particles on movement for better visibility
+      if (Math.abs(mouse.x - mouse.lastX) > 1) {
+        for (let i = 0; i < 5; i++) {
           particlesRef.current.push(createParticle(mouse.x, mouse.y));
         }
       }
@@ -100,8 +100,8 @@ export default function CustomCursor() {
       const grid = gridRef.current;
       const particles = particlesRef.current;
 
-      // Slight trail effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+      // Darker background with slight trail effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
       ctx.fillRect(0, 0, width, height);
 
       // Update & Draw Particles
@@ -111,11 +111,14 @@ export default function CustomCursor() {
         p.y += p.speedY;
         p.life -= p.decay;
 
-        // Draw particle
+        // Draw particle with glow
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = 'rgba(168, 85, 247, 0.8)';
         ctx.fillStyle = `rgba(168, 85, 247, ${p.life})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0;
 
         if (p.life <= 0) {
           particles.splice(i, 1);
@@ -143,10 +146,10 @@ export default function CustomCursor() {
         p.currentY += p.vy;
       });
 
-      // Draw fluid grid
+      // Draw fluid grid with enhanced visibility
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(168, 85, 247, 0.12)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(168, 85, 247, 0.25)';
+      ctx.lineWidth = 1.5;
 
       // Draw horizontal lines
       for (let y = 0; y < rows; y++) {
@@ -165,10 +168,11 @@ export default function CustomCursor() {
       }
       ctx.stroke();
 
-      // Tighter glow around cursor
+      // Enhanced glow around cursor
       if (mouse.active) {
-        const grad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 200);
-        grad.addColorStop(0, 'rgba(168, 85, 247, 0.3)');
+        const grad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 250);
+        grad.addColorStop(0, 'rgba(168, 85, 247, 0.4)');
+        grad.addColorStop(0.5, 'rgba(168, 85, 247, 0.15)');
         grad.addColorStop(1, 'transparent');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, height);
@@ -206,26 +210,60 @@ export default function CustomCursor() {
         style={{ zIndex: 1 }}
       />
 
-      {/* Central cursor dot with glow */}
+      {/* Central cursor dot with glow and mouse icon */}
       <div
         ref={cursorDotRef}
-        className="cursor-center fixed pointer-events-none"
+        className="cursor-center fixed pointer-events-none flex items-center justify-center"
         style={{
-          width: '16px',
-          height: '16px',
-          background: 'radial-gradient(circle, #fff 0%, rgba(168, 85, 247, 0.9) 100%)',
-          boxShadow: `
-            0 0 20px 8px rgba(255, 255, 255, 0.9),
-            0 0 40px 20px rgba(168, 85, 247, 0.7),
-            0 0 60px 30px rgba(168, 85, 247, 0.4)
-          `,
-          borderRadius: '50%',
+          width: '40px',
+          height: '40px',
           zIndex: 100,
           transform: 'translate(-50%, -50%)',
           transition: 'none',
           willChange: 'left, top',
         }}
-      />
+      >
+        {/* Glow effect */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(circle, #fff 0%, rgba(168, 85, 247, 0.9) 100%)',
+            boxShadow: `
+              0 0 20px 8px rgba(255, 255, 255, 0.9),
+              0 0 40px 20px rgba(168, 85, 247, 0.7),
+              0 0 60px 30px rgba(168, 85, 247, 0.4)
+            `,
+            borderRadius: '50%',
+            width: '16px',
+            height: '16px',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+        
+        {/* Mouse cursor icon */}
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="relative z-10"
+          style={{
+            filter: 'drop-shadow(0 0 4px rgba(168, 85, 247, 0.8))',
+          }}
+        >
+          <path
+            d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z"
+            fill="white"
+            stroke="rgba(168, 85, 247, 0.9)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
     </>
   );
 }
