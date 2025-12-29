@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MapPin, Phone, Mail, Globe, Instagram } from 'lucide-react';
+import { MapPin, Phone, Mail, Globe } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,12 +59,6 @@ export default function About() {
                   alt="Ganesh Bahadur Thapa"
                   className="w-full h-auto rounded-2xl object-cover"
                 />
-              </div>
-
-              {/* Floating Stats */}
-              <div className="absolute -bottom-6 -right-6 glass-strong p-6 rounded-2xl border border-primary/20">
-                <div className="text-3xl font-bold gradient-text">3+</div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
               </div>
             </div>
           </div>
@@ -129,18 +123,6 @@ export default function About() {
                   </a>
                 </div>
               </div>
-            </div>
-
-            {/* Social */}
-            <div className="flex items-center gap-4 pt-4">
-              <a
-                href="https://instagram.com/wex-ocean"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass p-3 rounded-xl hover:glass-strong transition-all hover:scale-110"
-              >
-                <Instagram className="w-5 h-5 text-primary" />
-              </a>
             </div>
           </div>
         </div>

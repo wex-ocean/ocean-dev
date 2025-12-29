@@ -211,17 +211,19 @@ export default function CustomCursor() {
         ref={cursorDotRef}
         className="cursor-center fixed pointer-events-none"
         style={{
-          width: '20px',
-          height: '20px',
-          background: '#fff',
+          width: '16px',
+          height: '16px',
+          background: 'radial-gradient(circle, #fff 0%, rgba(168, 85, 247, 0.9) 100%)',
           boxShadow: `
-            0 0 15px 5px rgba(255, 255, 255, 0.8),
-            0 0 30px 15px rgba(168, 85, 247, 0.6)
+            0 0 20px 8px rgba(255, 255, 255, 0.9),
+            0 0 40px 20px rgba(168, 85, 247, 0.7),
+            0 0 60px 30px rgba(168, 85, 247, 0.4)
           `,
           borderRadius: '50%',
           zIndex: 100,
           transform: 'translate(-50%, -50%)',
-          transition: 'transform 0.05s linear',
+          transition: 'none',
+          willChange: 'left, top',
         }}
       />
     </>

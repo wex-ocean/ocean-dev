@@ -79,7 +79,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src="/images/logo.jpg"
+                src="/images/logo.png"
                 alt="Ganesh Thapa Logo"
                 className="h-10 w-auto"
               />
