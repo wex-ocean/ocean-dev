@@ -81,7 +81,7 @@ export default function Footer() {
               <img
                 src="/images/logo.png"
                 alt="Ganesh Thapa Logo"
-                className="h-14 w-auto"
+                className="h-16 w-auto"
               />
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
