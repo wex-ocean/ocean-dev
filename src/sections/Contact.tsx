@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone, Download, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -245,6 +245,55 @@ export default function Contact() {
                 If you have a project in mind or just want to chat about web
                 development, feel free to get in touch!
               </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Resume Download Section */}
+        <div className="max-w-4xl mx-auto mt-16">
+          <div className="relative group">
+            {/* Animated Background Glow */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-primary-glow to-primary rounded-3xl opacity-30 group-hover:opacity-50 blur-xl transition-opacity duration-700" />
+            
+            {/* Card Container */}
+            <div className="relative glass-strong rounded-3xl p-8 xl:p-12 border border-primary/20 group-hover:border-primary/40 transition-all duration-500">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                {/* Left Content */}
+                <div className="flex items-center gap-6">
+                  {/* Icon */}
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-glow opacity-20 blur-2xl rounded-full" />
+                    <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                      <FileText className="w-10 h-10 text-white" />
+                    </div>
+                  </div>
+
+                  {/* Text */}
+                  <div>
+                    <h3 className="text-2xl xl:text-3xl font-bold mb-2 group-hover:text-primary transition-colors duration-500">
+                      Download My Resume
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Get a detailed overview of my skills, experience, and projects
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right Button */}
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-2xl hover:shadow-primary/50 hover:scale-105 transition-all duration-500 text-white font-semibold px-8 py-6 text-lg group/btn"
+                  asChild
+                >
+                  <a href="/resume.pdf" download="Ganesh_Thapa_Resume.pdf">
+                    <Download className="w-5 h-5 mr-2 group-hover/btn:animate-bounce" />
+                    Download Resume
+                  </a>
+                </Button>
+              </div>
+
+              {/* Animated Bottom Border */}
+              <div className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full bg-gradient-to-r from-primary via-primary-glow to-primary transition-all duration-700 ease-out rounded-full" />
             </div>
           </div>
         </div>
