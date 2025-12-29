@@ -25,7 +25,8 @@
 ### Project Structure
 ```
 src/
-├── components/# Reusable UI components\n├── sections/         # Page sections (Hero, About, Skills, etc.)
+├── components/       # Reusable UI components
+├── sections/         # Page sections (Hero, About, Skills, etc.)
 ├── hooks/            # Custom React hooks
 ├── animations/       # GSAP animation configurations
 ├── canvas/           # Canvas-based effects (FluidGrid, ParticleSystem)
@@ -39,8 +40,8 @@ src/
 - Accessibility compliant (ARIA labels, keyboard navigation, prefers-reduced-motion support)
 - Lighthouse score target: 90+ across all metrics
 
----
-\n## 4. Header Navigation System
+---\n
+## 4. Header Navigation System
 
 ### Header Structure
 - **Logo:** Display logo.jpg on the left side (height: 40-50px, maintain aspect ratio)
@@ -55,34 +56,30 @@ src/
 - Becomes sticky with smooth animation
 - Height remains consistent (70-80px)
 - Width shrinks to 88-92% of viewport and centers horizontally
-- Adds subtle top offset gap (8-12px)
-- **Fully rounded corners:** border-radius: 50px (pill-shaped)
+- Adds subtle top offset gap (8-12px)\n- **Fully rounded corners:** border-radius: 50px (pill-shaped)
 - **Solid background:** rgba(0, 0, 0, 0.95) with enhanced backdrop blur (blur-xl)
-- Soft gradient border: 1px solid rgba(168, 85, 247, 0.3)
-- Refined shadow: 0 4px 20px rgba(0, 0, 0, 0.3)
+- Soft gradient border: 1px solid rgba(168, 85, 247, 0.3)\n- Refined shadow: 0 4px 20px rgba(0, 0, 0, 0.3)
 - Zero layout shift during transition
 
 ### Mobile Behavior
 - Collapses into floating pill-style navigation
 - Hamburger menu with smooth slide-in animation
-- Touch-optimized tap targets (min44x44px)
+- Touch-optimized tap targets (min 44x44px)
 - Logo scales down proportionally
 \n### Technical Implementation
 - Use GSAP ScrollTrigger to detect scroll position (trigger at 100px scroll)
 - Animate header properties (width, border-radius, background opacity, blur, shadow) with custom easing
-- Maintain60fps performance during scroll
+- Maintain 60fps performance during scroll
 - Menu items have hover glow effect (purple accent)
-\n---
 
-## 5. Global Motion System
+---
+\n## 5. Global Motion System
 
 ### Animation Framework
-- **Primary Engine:** GSAP for all major animations
-- **ScrollTrigger:** Section reveals, parallax effects, text splitting animations
+- **Primary Engine:** GSAP for all major animations\n- **ScrollTrigger:** Section reveals, parallax effects, text splitting animations
 - **Smooth Scrolling:** Lenis or GSAP ScrollSmoother for physics-based scroll behavior
 - **Easing:** Custom cubic-bezier curves for natural motion feel
-
-### Animation Patterns
+\n### Animation Patterns
 - Staggered fade-in for section content
 - Parallax scrolling for background elements
 - Text reveal animations (split text, character-by-character)
@@ -96,7 +93,7 @@ src/
 ### Desktop Cursor Features
 - **Central Dot:** 20px diameter white circle with enhanced glow effect
 - **Glow Styling:**
-  - Inner glow: 00 15px 5px rgba(255, 255, 255, 0.8)
+  - Inner glow: 0 0 15px 5px rgba(255, 255, 255, 0.8)
   - Outer glow: 0 0 30px 15px rgba(168, 85, 247, 0.6)
 - Smooth position tracking with minimal lag (0.05s linear transition)
 - Automatically disabled on touch devices
@@ -116,15 +113,14 @@ src/
   - Cell size: 35px\n  - Grid color: rgba(168, 85, 247, 0.12) (subtle purple)
   - Dynamic grid that responds to mouse movement
 \n### Fluid Dynamics Behavior
-- **Effect radius:** 180px around cursor
-- **Force calculation:** (effectRadius - distance) / effectRadius
+- **Effect radius:** 180px around cursor\n- **Force calculation:** (effectRadius - distance) / effectRadius
 - **Displacement:** Points pushed away from cursor with force multiplier of 12
-- **Spring-back:** 0.06spring constant pulling points to base position
+- **Spring-back:** 0.06 spring constant pulling points to base position
 - **Damping:** 0.82 velocity damping for smooth motion
 - **Physics update:** Each grid point has velocity (vx, vy) and current position
 
 ### Particle Trail System
-- **Trigger:** Generate3particles when mouse moves more than 2px
+- **Trigger:** Generate 3 particles when mouse moves more than 2px
 - **Particle properties:**
   - Size: Random between 1-4px
   - Speed: Random velocity between -2 to +2 on both axes
@@ -136,11 +132,11 @@ src/
 ### Radial Glow Effect
 - **Active when:** Mouse is moving on canvas
 - **Gradient specs:**
-  - Center: rgba(168, 85, 247, 0.3)
-  - Radius: 200px
+  - Center: rgba(168, 85, 247, 0.3)\n  - Radius: 200px
   - Edge: Transparent
 - **Tighter glow:** Concentrated around cursor position
-\n### Canvas Performance
+
+### Canvas Performance
 - **Trail effect:** ctx.fillRect with rgba(3, 3, 3, 0.4) for motion blur
 - **Frame rate target:** 60fps
 - **Resize handling:** Reinitialize grid on window resize
@@ -212,15 +208,15 @@ src/
   5. cPanel / Hosting / DNS / SSL\n  6. Git, GitHub, Vercel, Figma, Responsive UI/UX Design
 - **Visual Effects:**
   - Grid layout (3 columns on desktop, 2 on tablet, 1 on mobile)
-  - Hover-activated depth cards with3D tilt
+  - Hover-activated depth cards with 3D tilt
   - Icon animations on card hover (use relevant tech icons)
-  - Scroll-triggered stagger reveal
-  - Each card has glassmorphic background with purple accent border
+  - Scroll-triggered stagger reveal\n  - Each card has glassmorphic background with purple accent border
 
 ### Experience Section\n- **Content (from Resume):**
   1. **WordPress Developer, JoogleTech Pvt. Ltd** (July 2025 - Present)
      - Designed custom themes and plugins for more than 20 client sites, optimized site speed to 90+%, and reduced loading times by more than 40%
-     - Integrate WooCommerce and payment gateway services to increase ecommerce sales\n     - Provided optimized databases and introduced caching to enhance performance on heavy-traffic sites
+     - Integrate WooCommerce and payment gateway services to increase ecommerce sales
+     - Provided optimized databases and introduced caching to enhance performance on heavy-traffic sites
      - Completed projects and maintenance work with actual clients. Contributed to optimizing workflows with my team\n  2. **Graphic Designer (Freelance)** (2024)\n     - Designed branding materials, menus, banners, and social media graphics
      - Ensured visual consistency across platforms using Figma and design principles
   3. **Data Entry Assistant, Softech Company** (2023)
@@ -251,20 +247,64 @@ src/
   - Hover scale effect\n  - Arranged in horizontal row\n
 ### Projects Section
 - **Content:**
-  - Project One: Moment Nepal (https://momentnepal.com/) - Use Moment-Logo.png
-  - Project Two: Webin Nepal (https://webinnepal.com/) - Use webin.png
-  - Project Three: Family Project - Use family.png
-  - Project Four: Hashboard (https://hashboard-one.vercel.app/) - Use hashboard.png
-  - Project Five: Designing Nepal (https://designingnepal.com/) - Use Designing-Nepal.png
-- **Visual Effects:**
-  - Grid layout (2 columns on desktop, 1 on mobile)
-  - Hover-driven3D preview cards
-  - Image zoom and tilt on hover
-  - Project details slide in from bottom on hover
-  - Live link button with magnetic effect
-  - Each card shows project logo/screenshot with glassmorphic overlay
+  1. **Project One: Webin Nepal**
+     - Image: webin.png
+     - Description: A digital agency providing web design, development, and graphic design services.\n     - Link: https://webinnepal.com/
+  2. **Project Two: Moment Nepal**
+     - Image: Moment.png
+     - Description: A photography service specializing in wedding, portrait and corporate.\n     - Link: https://momentnepal.com/
+  3. **Project Three: Family Shopping Center**
+     - Image: family.png
+     - Description: An e-commerce website selling groceries and household products.
+     - Link: (Family Project)
+  4. **Project Four: HashBoard**
+     - Image: hashboard.png
+     - Description: HashBoard is a lightweight, serverless sticky note dashboard. It allows you to create, organize, and customize thoughts on an infinite canvas.
+     - Link: https://hashboard-one.vercel.app/
+  5. **Project Five: Designing Nepal**
+     - Image: Designing.png
+     - Description: Designing Nepal is a creative agency specializing in design, web & app development, branding, and marketing solutions.
+     - Link: https://designingnepal.com/
+  6. **Project Six: SEWA Nepal**
+     - Image: sewanepal.png
+     - Description: SEWA Nepal is a non-profit empowering underprivileged communities through education, healthcare, and sustainable development.
+     - Link: (SEWA Nepal Project)
+\n- **Visual Effects & Interaction Design:**
+  - **Layout:** Responsive grid (3 columns on desktop, 2 on tablet, 1 on mobile)
+  - **Card Structure:**
+    - Glassmorphic container with backdrop-filter: blur(15px)
+    - Background: rgba(0, 0, 0, 0.5)
+    - Border: 1px solid rgba(168, 85, 247, 0.25)
+    - Border-radius: 24px for premium feel
+    - Padding: 1.5rem
+  - **Hover Animations (smooth, performance-optimized):**
+    - **Scale-up:** transform: scale(1.05) with 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) easing
+    - **Elevation:** Box-shadow transition from 0 4px 12px rgba(0, 0, 0, 0.2) to 0 20px 40px rgba(168, 85, 247, 0.4)
+    - **Glow Effect:** Border color shifts to rgba(168, 85, 247, 0.6) with soft outer glow
+    - **Image Zoom:** Project image scales to 1.1 with overflow hidden, 0.4s ease-out transition
+  - **Micro-interactions:**
+    - **Gradient Shift:** Background gradient overlay transitions from transparent to linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1)) on hover
+    - **Icon Reveal:** External link icon fades in and slides up from bottom-right corner (opacity 0 to 1, translateY(10px) to 0)
+    - **Text Overlay:** Project description slides up from bottom with backdrop blur, revealing full details on hover
+  - **Button Styling:**
+    - 'View Project' button with magnetic effect (same as global magnetic buttons)
+    - Background: linear-gradient(45deg, #a855f7, #ec4899)
+    - Border-radius: 99px
+    - Padding: 0.6rem 1.8rem
+    - Font-weight: 600
+    - Hover: Slight scale(1.08) with enhanced shadow
+  - **Performance Optimization:**
+    - Use CSS transform and opacity for animations (GPU-accelerated)
+    - will-change: transform on hover-enabled cards
+    - Debounced hover handlers to prevent excessive reflows
+    - Lazy load project images with blur-up placeholder
+  - **Accessibility:**
+    - ARIA labels for project links and buttons
+    - Keyboard focus states with visible outline (purple glow)
+    - Reduced motion support: disable scale and complex animations if prefers-reduced-motion is active
 
-### Contact Section\n- **Content:**
+### Contact Section
+- **Content:**
   - Contact form with fields: Name, Email, Message
   - Contact details:\n    - Phone: 9742391729
     - Email: oceanney5555@gmail.com
@@ -280,9 +320,10 @@ src/
 
 ## 10. Footer Section
 
-### Footer Structure\n- **Layout:** Three-column layout on desktop, stacked on mobile
-- **Column1 - Branding:**
-  - Display logo.jpg (smaller version,30-40px height)
+### Footer Structure
+- **Layout:** Three-column layout on desktop, stacked on mobile
+- **Column 1 - Branding:**
+  - Display logo.jpg (smaller version, 30-40px height)
   - Tagline: 'WordPress Developer'
   - Copyright text: '© 2025 Ganesh Bahadur Thapa. All rights reserved.'
 - **Column 2 - Quick Links:**
@@ -309,15 +350,13 @@ src/
 ## 11. Performance & Responsiveness
 
 ### Performance Optimization
-- Lazy loading for images (Resume.jpg, logo.jpg, project logos) and heavy components
-- Code splitting by route/section
+- Lazy loading for images (Resume.jpg, logo.jpg, project images: webin.png, Moment.png, family.png, hashboard.png, Designing.png, sewanepal.png) and heavy components\n- Code splitting by route/section
 - Debounced scroll and resize handlers
 - GPU-accelerated CSS transforms
 - Minimal DOM manipulation\n- Efficient canvas rendering (requestAnimationFrame loop)
 - Particle pool management (remove dead particles)
 - Image optimization (WebP format with fallbacks)
-
-### Responsive Breakpoints
+\n### Responsive Breakpoints
 - Mobile: < 720px
 - Tablet: 720px – 980px
 - Desktop: > 980px
@@ -329,6 +368,7 @@ src/
 - Graceful degradation for older browsers
 - Header menu collapses to hamburger on mobile
 - Footer columns stack vertically on mobile
+- Project cards adjust to single column on mobile with optimized touch interactions
 
 ---
 
@@ -344,12 +384,14 @@ src/
 - **Header Scrolled:** rgba(0, 0, 0, 0.95) with enhanced blur
 \n### Visual Effects
 - **Glassmorphism:** Frosted glass cards with soft borders (rgba(168, 85, 247, 0.2)) and 15px backdrop blur
-- **Gradients:** Smooth radial gradients for cursor glow, linear gradients for buttons
-- **Shadows:** Layered, soft shadows for elevation hierarchy (010px 20px -5px)\n- **Glow:** Dual-layer glow on cursor (tight inner + soft outer purple halo)
+- **Gradients:** Smooth radial gradients for cursor glow, linear gradients for buttons and hover overlays
+- **Shadows:** Layered, soft shadows for elevation hierarchy (0 10px 20px -5px)\n- **Glow:** Dual-layer glow on cursor (tight inner + soft outer purple halo)
 - **Particles:** Trailing purple particles with alpha fade-out
 - **Header Transition:** Smooth morphing from semi-transparent to solid with full rounded corners
+- **Project Cards:** Multi-layered hover effects with scale, glow, gradient shifts, and icon reveals
 
-### Typography\n- **Headings:** Poppins (700weight, tight letter-spacing)
+### Typography
+- **Headings:** Poppins (700 weight, tight letter-spacing)
 - **Body:** Inter (400–600 weight, optimized line-height)
 - **Scale:** Fluid typography using clamp() for responsive sizing
 - **Resume Data:** Maintain professional hierarchy with clear section headings
@@ -357,7 +399,7 @@ src/
 ### Layout Principles
 - Strong depth and layering with canvas background (z-index: 1), content overlay (z-index: 10), header (z-index: 50), cursor (z-index: 100)\n- Generous whitespace for breathing room
 - Asymmetric grid layouts for visual interest
-- Consistent border radius (32px for cards, 50px for scrolled header, 99px for buttons)
+- Consistent border radius (24px for project cards, 32px for section cards, 50px for scrolled header, 99px for buttons)
 - Smooth, natural motion throughout
 - Clear visual hierarchy for resume content sections
 
@@ -365,15 +407,15 @@ src/
 \n## 13. Accessibility Requirements
 
 - Semantic HTML structure
-- ARIA labels for interactive elements (header menu, buttons, form inputs)
+- ARIA labels for interactive elements (header menu, buttons, form inputs, project cards)
 - Keyboard navigation support (tab order, focus states, skip links)
 - Skip-to-content link for screen readers
 - Sufficient color contrast ratios (WCAG AA minimum)
-- Respect prefers-reduced-motion user preference (disable canvas effects if requested)
-- Alt text for all images (logo.jpg, Resume.jpg, project logos)
+- Respect prefers-reduced-motion user preference (disable canvas effects and complex animations if requested)
+- Alt text for all images (logo.jpg, Resume.jpg, webin.png, Moment.png, family.png, hashboard.png, Designing.png, sewanepal.png)
 - Form labels and error messages with proper ARIA attributes
 - Pointer-events: none on decorative canvas and cursor elements
-- Focus visible indicators on all interactive elements
+- Focus visible indicators on all interactive elements (purple glow outline)
 
 ---
 
@@ -381,11 +423,10 @@ src/
 
 All content from Resume.jpg must be accurately integrated:\n\n- **Personal Information:** Ganesh Bahadur Thapa, WordPress Developer, @wex-ocean, https://ocean-pi.vercel.app/, 9742391729, oceanney5555@gmail.com, Imadol Lalitpur
 - **Summary:** Complete professional summary as stated in resume
-- **Skills:** All6 skill categories with detailed technologies
+- **Skills:** All 6 skill categories with detailed technologies
 - **Work Experience:** 3 positions (JoogleTech, Freelance Graphic Designer, Softech) with full descriptions and dates
-- **Education:** BIT degree (2023-2027) and Secondary Education (2020-2022) with institutions
-- **Certifications:** WordPress Development and Core Java Programming diplomas
-- **Projects:** 5 projects with logos (Moment-Logo.png, webin.png, family.png, hashboard.png, Designing-Nepal.png) and live links
+- **Education:** BIT degree (2023-2027) and Secondary Education (2020-2022) with institutions\n- **Certifications:** WordPress Development and Core Java Programming diplomas
+- **Projects:** 6 projects with images (webin.png, Moment.png, family.png, hashboard.png, Designing.png, sewanepal.png), descriptions, and live links
 - **Images:** logo.jpg for header/footer, Resume.jpg profile photo for hero/about sections
 \n---
 
@@ -409,8 +450,21 @@ All content from Resume.jpg must be accurately integrated:\n\n- **Personal Infor
 - GSAP animation for header transformation (width, border-radius, background, blur)
 - Conditional styling based on scroll state
 - Logo image (logo.jpg) with proper sizing\n- Navigation menu with smooth scroll links
-- Magnetic'Hire Me' button component
+- Magnetic 'Hire Me' button component
 - Mobile hamburger menu with slide-in animation
+```
+
+### Project Card Component Structure
+```javascript
+// ProjectCard.jsx
+- Props: image, title, description, link
+- useState for hover state tracking
+- useRef for card element and magnetic button
+- Mouse event handlers for hover effects (mouseenter, mouseleave, mousemove)
+- GSAP animations for scale, shadow, glow transitions
+- Lazy loading for project images
+- Conditional rendering for icon reveal and overlay
+- Accessibility attributes (ARIA labels, keyboard focus)
 ```
 
 ### Integration Points
@@ -420,41 +474,44 @@ All content from Resume.jpg must be accurately integrated:\n\n- **Personal Infor
 - Custom cursor component tracks mouse globally with z-index: 100
 - Magnetic buttons use individual mousemove/mouseleave handlers
 - Glassmorphic cards positioned above canvas with proper stacking context
-- Footer positioned at bottom with proper spacing
-
+- Project cards grid with responsive layout and optimized hover interactions
+- Footer positioned at bottom with proper spacing\n
 ---
-\n## 16. Design Style\n
+
+## 16. Design Style\n
 - **Overall Aesthetic:** Dark, futuristic, high-tech with cosmic fluid dynamics and particle trails creating an immersive, interactive experience; professional portfolio presentation with clear content hierarchy\n- **Color Scheme:** Near-black background (#030303) with vibrant purple accents (#a855f7) and pink gradients (#ec4899), white text for maximum contrast\n- **Visual Depth:** Multi-layered composition with canvas grid (z:1), glassmorphic content cards (z:10), sticky header (z:50), and glowing cursor (z:100) creating strong spatial hierarchy
-- **Motion Language:** Physics-based fluid grid distortion with 180px effect radius, trailing particle system, magnetic button interactions with0.4x attraction multiplier, smooth header morphing on scroll
-- **Canvas Integration:** Full-screen 35px grid with subtle purple lines (12% opacity) that dynamically warps around cursor with spring-back physics (0.06constant, 0.82 damping)
-- **Interactive Feedback:** 20px white cursor dot with dual-layer purple glow (15px inner + 30px outer), 3-particle trail generation on movement, magnetic buttons with cubic-bezier easing
+- **Motion Language:** Physics-based fluid grid distortion with 180px effect radius, trailing particle system, magnetic button interactions with 0.4x attraction multiplier, smooth header morphing on scroll, premium project card hover effects with scale, glow, and gradient shifts
+- **Canvas Integration:** Full-screen 35px grid with subtle purple lines (12% opacity) that dynamically warps around cursor with spring-back physics (0.06 constant, 0.82 damping)
+- **Interactive Feedback:** 20px white cursor dot with dual-layer purple glow (15px inner + 30px outer), 3-particle trail generation on movement, magnetic buttons with cubic-bezier easing, project cards with multi-layered hover animations
 - **Typography Treatment:** Bold Poppins headings paired with clean Inter body text, rendered above glassmorphic cards with 15px backdrop blur
-- **Border Styling:** 32px rounded corners on content cards with 1px purple borders (20% opacity), 50px fully rounded header when scrolled, 99px pill-shaped buttons with gradient backgrounds
+- **Border Styling:** 24px rounded corners on project cards, 32px on section cards with 1px purple borders (20-25% opacity), 50px fully rounded header when scrolled, 99px pill-shaped buttons with gradient backgrounds
 - **Header Evolution:** Seamless transition from semi-transparent integrated header to floating pill-shaped sticky header with solid background and complete corner rounding
-- **Content Presentation:** Professional resume data displayed with clear visual hierarchy, glassmorphic cards for each section, consistent spacing and alignment
+- **Content Presentation:** Professional resume data displayed with clear visual hierarchy, glassmorphic cards for each section, consistent spacing and alignment, captivating project showcase with modern hover interactions
 
 ---
 \n## 17. Image Assets
 
 - **logo.jpg:** Brand logo displayed in header (40-50px height) and footer (30-40px height)
 - **Resume.jpg:** Profile photo used in hero section and about section with subtle glow effect
-- **Moment-Logo.png:** Project logo for Moment Nepal\n- **webin.png:** Project logo for Webin Nepal\n- **family.png:** Project image for Family Project
-- **hashboard.png:** Project logo for Hashboard
-- **Designing-Nepal.png:** Project logo for Designing Nepal
-\n---
+- **webin.png:** Project image for Webin Nepal (Project One)\n- **Moment.png:** Project image for Moment Nepal (Project Two)
+- **family.png:** Project image for Family Shopping Center (Project Three)
+- **hashboard.png:** Project image for HashBoard (Project Four)
+- **Designing.png:** Project image for Designing Nepal (Project Five)
+- **sewanepal.png:** Project image for SEWA Nepal (Project Six)
 
-## 18. Final Outcome
+---
+\n## 18. Final Outcome
 
 A **premium, immersive portfolio experience** that:\n- Features a full-screen fluid grid canvas with physics-based distortion and particle trails
 - Implements an enhanced custom cursor with tight dual-layer purple glow
 - Includes a sophisticated header system with logo.jpg, navigation menu, and 'Hire Me' button that transforms into a fully rounded, solid-background sticky header on scroll
 - Displays complete professional information from resume including summary, skills, experience, education, certifications, and projects
-- Showcases 5 live projects with proper logos and working links
+- Showcases 6 live projects with modern, visually captivating project cards featuring smooth hover effects (scale-up, elevation, glow, gradient shifts, icon reveals, image zoom)
 - Provides comprehensive contact information and functional contact form
 - Features a well-structured footer with branding, quick links, and back-to-top functionality
-- Responds dynamically to user movement with180px effect radius and spring-back physics
-- Performs flawlessly across devices (60fps target with optimized canvas rendering)
+- Responds dynamically to user movement with 180px effect radius and spring-back physics
+- Performs flawlessly across devices (60fps target with optimized canvas rendering and GPU-accelerated animations)
 - Clearly demonstrates advanced frontend, canvas animation, and interaction design expertise
 - Maintains all resume content with professional presentation and clear hierarchy
-- Achieves Awwwards/Apple-level visual and interaction quality with cosmic, fluid aesthetics
+- Achieves Awwwards/Apple-level visual and interaction quality with cosmic, fluid aesthetics and premium micro-interactions
 - Serves as a compelling showcase for WordPress development services and technical capabilities
