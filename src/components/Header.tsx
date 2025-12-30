@@ -7,7 +7,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Header() {
   const headerRef = useRef<HTMLElement>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -16,7 +15,6 @@ export default function Header() {
 
     const handleScroll = () => {
       const scrolled = window.scrollY > 50;
-      setIsScrolled(scrolled);
 
       if (scrolled) {
         gsap.to(header, {
